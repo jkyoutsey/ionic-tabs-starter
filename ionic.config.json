@@ -1,0 +1,7 @@
+{
+  "name": "tabs-starter",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
