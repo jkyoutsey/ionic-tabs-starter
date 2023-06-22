@@ -1,15 +1,35 @@
 import { Routes } from '@angular/router';
-import { TabsPage } from './tabs.page';
 
 export const routes: Routes = [
   {
     path: 'tabs',
-    component: TabsPage,
+    loadComponent: () => import('./tabs.page').then((m) => m.TabsPage),
     children: [
       {
-        path: 'tab1',
+        path: 'products',
         loadComponent: () =>
           import('../tab1/tab1.page').then((m) => m.Tab1Page),
+        children: [
+          {
+            path: 'home',
+            loadComponent: () =>
+              import('../tab1-home/tab1-home.component').then(
+                (m) => m.Tab1HomeComponent
+              ),
+          },
+          {
+            path: 'child1',
+            loadComponent: () =>
+              import('../child1/child1.component').then(
+                (m) => m.Child1Component
+              ),
+          },
+          {
+            path: '',
+            redirectTo: 'home',
+            pathMatch: 'prefix',
+          },
+        ],
       },
       {
         path: 'tab2',
@@ -23,14 +43,14 @@ export const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: '/tabs/tab1',
-        pathMatch: 'full',
+        redirectTo: '/tabs/products/home',
+        pathMatch: 'prefix',
       },
     ],
   },
   {
     path: '',
-    redirectTo: '/tabs/tab1',
+    redirectTo: 'tabs',
     pathMatch: 'full',
   },
 ];
